@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AutoAid • User Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Top Nav -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <div class="brand-name">AutoAid</div>
+        <div class="brand-sub">User Dashboard</div>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <div class="chip" id="userInfo">Loading...</div>
+      <button class="btn ghost" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <a class="side-link active" href="dashboard.html">🏠 Dashboard</a>
+      <a class="side-link" href="mechanic.html">🛠 Mechanic Panel</a>
+      <a class="side-link" href="admin.html">🧑‍💼 Admin Panel</a>
+
+      <div class="side-card">
+        <div class="side-card-title">Quick Tip</div>
+        <div class="side-card-text">
+          Turn on location (GPS) while creating a request to show the exact position on map.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <section class="content">
+      <!-- Page header -->
+      <div class="page-head">
+        <div>
+          <h1 class="h1">Welcome 👋</h1>
+          <p class="muted">Create a breakdown request and track your status.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn" onclick="seedDemoRequests()">Add Demo Requests</button>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="cards">
+        <div class="card kpi">
+          <div class="kpi-label">Total Requests</div>
+          <div class="kpi-value" id="kpiTotal">0</div>
+          <div class="kpi-sub">All time</div>
+        </div>
+
+        <div class="card kpi">
+          <div class="kpi-label">Open</div>
+          <div class="kpi-value" id="kpiOpen">0</div>
+          <div class="kpi-sub">Waiting for mechanic</div>
+        </div>
+
+        <div class="card kpi">
+          <div class="kpi-label">In Progress</div>
+          <div class="kpi-value" id="kpiProgress">0</div>
+          <div class="kpi-sub">Mechanic accepted</div>
+        </div>
+
+        <div class="card kpi">
+          <div class="kpi-label">Completed</div>
+          <div class="kpi-value" id="kpiDone">0</div>
+          <div class="kpi-sub">Service finished</div>
+        </div>
+      </div>
+
+      <!-- Create Request -->
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="h2">Create Breakdown Request</h2>
+              <p class="muted">Enter your vehicle issue and optional location text.</p>
+            </div>
+            <span class="pill">Secure</span>
+          </div>
+
+          <form class="form" onsubmit="event.preventDefault(); createRequestUI();">
+            <div class="row2">
+              <div class="field">
+                <label>Vehicle Number</label>
+                <input id="vehicle_no" placeholder="e.g., GJ01AB1234" required />
+              </div>
+
+              <div class="field">
+                <label>Issue</label>
+                <input id="issue" placeholder="e.g., Engine problem" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Location (Optional)</label>
+              <input id="location" placeholder="e.g., Godhra, Highway NH-47" />
+              <div class="hint">GPS will be captured automatically if allowed.</div>
+            </div>
+
+            <div class="actions">
+              <button class="btn" type="submit">Submit Request</button>
+              <button class="btn ghost" type="button" onclick="clearForm()">Clear</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Status + Instructions -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="h2">How It Works</h2>
+              <p class="muted">Simple flow similar to Uber-style matching.</p>
+            </div>
+            <span class="pill">Realtime Demo</span>
+          </div>
+
+          <ol class="steps">
+            <li><b>Create request</b> with vehicle number and issue</li>
+            <li><b>Share GPS</b> to pinpoint exact breakdown location</li>
+            <li><b>Mechanic accepts</b> the request from mechanic panel</li>
+            <li><b>Admin monitors</b> all requests in admin dashboard</li>
+          </ol>
+
+          <div class="divider"></div>
+
+          <div class="muted small">
+            Presentation Tip: Show request creation → mechanic accept → admin view map.
+          </div>
+        </div>
+      </div>
+
+      <!-- Requests Table -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2 class="h2">My Requests</h2>
+            <p class="muted">Latest requests appear first.</p>
+          </div>
+
+          <div class="table-actions">
+            <input class="search" id="searchBox" placeholder="Search vehicle / issue / status..."
+                   oninput="renderMyRequests()" />
+            <button class="btn ghost" onclick="renderMyRequests()">Refresh</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Vehicle</th>
+                <th>Issue</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody id="reqBody">
+              <tr><td colspan="6" class="muted">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="footer">
+        AutoAid © 2026 • Dashboard UI v1
+      </footer>
+    </section>
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Use demo.js for GitHub Pages OR app.js for local backend -->
+  <script src="demo-dashboard.js"></script>
+</body>
+</html>
