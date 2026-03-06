@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>AutoAid • Admin Dispatch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Arial, sans-serif; background:#f4f6fb; }
+    .wrap { max-width: 1200px; margin: 18px auto; padding: 0 14px; }
+    .top {
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      background:#fff; padding:14px; border-radius:14px; border:1px solid #e7e7ef;
+    }
+    .title h2 { margin:0; }
+    .title small { color:#666; }
+    .btns { display:flex; gap:10px; flex-wrap:wrap; }
+    button {
+      padding:10px 12px; border-radius:10px; border:1px solid #ddd;
+      background:#fff; cursor:pointer; font-weight:600;
+    }
+    button:hover { background:#f2f2f7; }
+    .grid { display:grid; grid-template-columns: 1.25fr .75fr; gap:12px; margin-top:12px; }
+    .card { background:#fff; border:1px solid #e7e7ef; border-radius:14px; padding:12px; }
+    #map { height: 520px; border-radius:12px; border:1px solid #eee; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { border-bottom:1px solid #eee; padding:10px; vertical-align: top; }
+    th { text-align:left; font-size: 13px; color:#333; background:#fafafa; }
+    .badge { padding:4px 8px; border-radius:999px; font-size:12px; background:#eef2ff; display:inline-block; }
+    .msg { padding:10px; border-radius:10px; margin-top:10px; display:none; }
+    .ok { background:#e7ffe7; }
+    .err { background:#ffe7e7; }
+    select { padding:8px; border-radius:10px; border:1px solid #ddd; width:100%; }
+    @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } #map { height: 420px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">
+        <h2>Admin Dispatch Console</h2>
+        <small id="adminInfo">Checking admin...</small>
+      </div>
+      <div class="btns">
+        <button onclick="window.location.href='/dashboard.html'">User Dashboard</button>
+        <button onclick="loadAdminData()">Refresh Now</button>
+        <button onclick="toggleLive()">Live: <span id="liveState">ON</span></button>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <div id="msg" class="msg"></div>
+
+    <div class="grid">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
+          <div><b>Live Map</b> <span class="badge">Requests + GPS</span></div>
+          <div style="color:#666; font-size:13px;">Auto-refresh every 5 seconds</div>
+        </div>
+        <div id="map"></div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <b>Requests</b>
+          <span class="badge" id="countBadge">0</span>
+        </div>
+
+        <div style="margin-top:10px; max-height: 520px; overflow:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Issue</th>
+                <th>Assign Mechanic</th>
+              </tr>
+            </thead>
+            <tbody id="reqBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    initAdmin();
+  </script>
+</body>
+</html>

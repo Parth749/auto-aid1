@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>AutoAid • Roadside Assistance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>AutoAid</div>
+      </div>
+      <div class="pill">Full-Stack Demo • Leaflet Map • JWT</div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:14px;">
+      <div class="card">
+        <div class="pill" style="display:inline-block;">Smart Roadside Assistance</div>
+        <h1>Request help.<br/>Mechanics accept nearby jobs.</h1>
+        <p class="sub">
+          AutoAid lets drivers raise breakdown requests with GPS. Mechanics can accept nearby requests Uber-style. Admin monitors requests on a live map.
+        </p>
+
+        <div class="features">
+          <div class="mini">
+            <b>Secure Login</b>
+            <span>JWT authentication + role access (User / Mechanic / Admin).</span>
+          </div>
+          <div class="mini">
+            <b>Live Map</b>
+            <span>Leaflet + OpenStreetMap markers, no paid API keys.</span>
+          </div>
+          <div class="mini">
+            <b>Nearest Mechanic</b>
+            <span>Distance computed using Haversine formula (km).</span>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+        <div class="pill">Tip: Allow location permission when creating a request to show it on the map.</div>
+      </div>
+
+      <div class="card">
+        <h2>Get Started</h2>
+        <p class="sub">Create an account or login to your dashboard.</p>
+
+        <h3 style="margin-top:10px;">Register</h3>
+        <input class="input" id="r_name" placeholder="Name" />
+        <input class="input" id="r_email" placeholder="Email" />
+        <input class="input" id="r_password" type="password" placeholder="Password" />
+        <button class="btn primary" id="btnRegister" onclick="registerUser()">Create Account</button>
+
+        <div class="hr"></div>
+
+        <h3>Login</h3>
+        <input class="input" id="l_email" placeholder="Email" />
+        <input class="input" id="l_password" type="password" placeholder="Password" />
+        <button class="btn" id="btnLogin" onclick="loginUser()">Login</button>
+
+        <p class="small" style="margin-top:10px;">
+          Admin/Mechanic accounts can be created via API with <b>role</b> field (admin/mechanic).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
